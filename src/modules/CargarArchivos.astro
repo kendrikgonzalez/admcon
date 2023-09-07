@@ -1,17 +1,55 @@
 <div			class:list={[
-    'flex flex-col flex-1 pt-5 pb-28 overflow-y-auto',
+    'flex flex-col flex-1 overflow-y-auto',
     'scrollbar scrollbar-w-2 scrollbar-thumb-rounded-[0.1667rem]',
     'scrollbar-thumb-slate-200 scrollbar-track-gray-400',
     'dark:scrollbar-thumb-slate-900 dark:scrollbar-track-gray-800',
 ]}>
     <form class="flex-1 px-3 space-y-1 bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700 m-4 rounded-lg p-5">
       <div class="mb-4 text-center">        
-        <label class="block mb-2 text-lg font-medium text-gray-900 dark:text-white" for="file_input">Selecionar un Archivo</label>
-        <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file">
+        <div class="flex items-center justify-center w-full">
+            <input type="file" name="archivo" id="archivo" class="hidden">
+            <label for="archivo" class="flex items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+              <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                </svg>
+                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Selecciona un archivo</span> o arrastra y suelta aquí</p>
+                <p class="text-xs text-gray-400 dark:text-gray-500">(Tamaño máximo del archivo: 10 MB)</p>
+              </div>
+            </label>
+        </div>         
       </div>
       <div class="flex items-center justify-center">
-        <button type="submit" class="bg-blue-500 mt-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Cargar archivo</button>
+        <button type="submit" class="bg-blue-500 mt-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Subir archivo</button>
       </div>
     </form>
   </div>
+
+  <div class="flex-1 px-3 space-y-1 bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700 m-4 rounded-lg p-5">
+      <div id="archivo-preview" class="flex"></div>
+  </div>
+
+  <script>
+    const archivoInput = document.getElementById('archivo');
+    const archivoPreview = document.getElementById('archivo-preview');
+    archivoPreview.innerHTML = '';
+    
+    archivoInput.addEventListener('change', () => {
+    
+      for (let i = 0; i < archivoInput.files.length; i++) {
+        const archivo = archivoInput.files[i];
+    
+        const archivoDiv = document.createElement('div');
+        archivoDiv.classList.add('mb-2');
+        archivoDiv.classList.add('m-4');
+        archivoDiv.innerHTML += `
+          <p class="text-sm text-center font-medium text-gray-700">${archivo.name}</p>
+          <p class="text-xs text-center text-gray-400">${(archivo.size / (1024 * 1024)).toFixed(2)} MB</p>
+        `;
+    
+        archivoPreview.appendChild(archivoDiv);
+      }
+    });
+    </script>
+    
   
